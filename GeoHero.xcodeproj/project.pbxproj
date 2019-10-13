@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C3AC83023530E41000B5E85 /* EncounterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C3AC82F23530E41000B5E85 /* EncounterController.swift */; };
+		9C57BC43231D965C00029275 /* VectorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C57BC42231D965C00029275 /* VectorController.swift */; };
 		9C911E3122E68A5500307DDF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C911E3022E68A5500307DDF /* AppDelegate.swift */; };
 		9C911E3322E68A5500307DDF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C911E3222E68A5500307DDF /* ViewController.swift */; };
 		9C911E3622E68A5500307DDF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C911E3422E68A5500307DDF /* Main.storyboard */; };
@@ -35,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9C3AC82F23530E41000B5E85 /* EncounterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncounterController.swift; sourceTree = "<group>"; };
+		9C57BC42231D965C00029275 /* VectorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorController.swift; sourceTree = "<group>"; };
 		9C911E2D22E68A5500307DDF /* GeoHero.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeoHero.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C911E3022E68A5500307DDF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C911E3222E68A5500307DDF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -102,10 +106,12 @@
 				9C911E3022E68A5500307DDF /* AppDelegate.swift */,
 				9C911E3222E68A5500307DDF /* ViewController.swift */,
 				9C911E3422E68A5500307DDF /* Main.storyboard */,
+				9C57BC42231D965C00029275 /* VectorController.swift */,
 				9C911E3A22E68A5A00307DDF /* Assets.xcassets */,
 				9C911E3C22E68A5A00307DDF /* LaunchScreen.storyboard */,
 				9C911E3F22E68A5A00307DDF /* Info.plist */,
 				9C911E3722E68A5500307DDF /* GeoHero.xcdatamodeld */,
+				9C3AC82F23530E41000B5E85 /* EncounterController.swift */,
 			);
 			path = GeoHero;
 			sourceTree = "<group>";
@@ -259,9 +265,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C57BC43231D965C00029275 /* VectorController.swift in Sources */,
 				9C911E3322E68A5500307DDF /* ViewController.swift in Sources */,
 				9C911E3122E68A5500307DDF /* AppDelegate.swift in Sources */,
 				9C911E3922E68A5500307DDF /* GeoHero.xcdatamodeld in Sources */,
+				9C3AC83023530E41000B5E85 /* EncounterController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,6 +443,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ZQ57T4SQDD;
 				INFOPLIST_FILE = GeoHero/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -452,6 +461,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ZQ57T4SQDD;
 				INFOPLIST_FILE = GeoHero/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
