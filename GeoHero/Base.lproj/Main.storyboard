@@ -135,6 +135,21 @@
             </objects>
             <point key="canvasLocation" x="-55.200000000000003" y="35.532233883058474"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="KKD-wQ-jNS">
+            <objects>
+                <viewController storyboardIdentifier="EncounterController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="F4p-Jv-ikO" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kP0-4t-dDJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="igQ-3S-63F"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gYO-W3-Jt4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-748" y="694"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="OgU-Gd-kYI"/>
