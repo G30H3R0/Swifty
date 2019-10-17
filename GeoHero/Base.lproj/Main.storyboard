@@ -56,6 +56,7 @@
                     <connections>
                         <outlet property="MapView" destination="eMO-93-UAc" id="D4D-cJ-WSZ"/>
                         <segue destination="RzW-JN-1xY" kind="presentation" identifier="addVectorSegue" id="zIn-fZ-DZP"/>
+                        <segue destination="F4p-Jv-ikO" kind="presentation" identifier="encounterVector" id="wiD-U7-0jV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -135,12 +136,12 @@
             </objects>
             <point key="canvasLocation" x="-55.200000000000003" y="35.532233883058474"/>
         </scene>
-        <!--View Controller-->
+        <!--Encounter Controller-->
         <scene sceneID="KKD-wQ-jNS">
             <objects>
-                <viewController storyboardIdentifier="EncounterController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="F4p-Jv-ikO" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EncounterController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="F4p-Jv-ikO" customClass="EncounterController" customModule="GeoHero" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kP0-4t-dDJ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="igQ-3S-63F"/>
@@ -152,6 +153,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="zIn-fZ-DZP"/>
         <segue reference="OgU-Gd-kYI"/>
     </inferredMetricsTieBreakers>
 </document>

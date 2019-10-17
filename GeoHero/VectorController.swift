@@ -79,6 +79,11 @@ class VectorController: UIViewController {
                 self.populatePicker(arr: arr);
             } catch let JSONerror {
                 print ("error parsing JSON", JSONerror)
+                
+                //Mock Data
+                arr = ["New Quest", "Items: Bow", "Items: Potion", "Items: Staff", "Items: Sword", "Monsters: Dragon", "Monsters: Goblin", "Monsters: Greg the Ogre", "Monsters: Jobi the Meatsack", "Monsters: Skeleton", "Stores: General Store"]
+                
+                self.populatePicker(arr: arr);
             }
         }.resume()
     }
@@ -96,6 +101,11 @@ class VectorController: UIViewController {
                 self.populateEnts(array:array);
              } catch let JSONerror {
                  print ("error parsing JSON", JSONerror)
+                
+                //Mock Data
+                array = [GeoHero.Entity(EntityID: 6, EntityName: "Bow", EntityTypeID: 2, EntityTypeName: "Items"), GeoHero.Entity(EntityID: 14, EntityName: "Potion", EntityTypeID: 2, EntityTypeName: "Items"), GeoHero.Entity(EntityID: 5, EntityName: "Staff", EntityTypeID: 2, EntityTypeName: "Items"), GeoHero.Entity(EntityID: 4, EntityName: "Sword", EntityTypeID: 2, EntityTypeName: "Items"), GeoHero.Entity(EntityID: 1, EntityName: "Dragon", EntityTypeID: 1, EntityTypeName: "Monsters"), GeoHero.Entity(EntityID: 2, EntityName: "Goblin", EntityTypeID: 1, EntityTypeName: "Monsters"), GeoHero.Entity(EntityID: 13, EntityName: "Greg the Ogre", EntityTypeID: 1, EntityTypeName: "Monsters"), GeoHero.Entity(EntityID: 15, EntityName: "Jobi the Meatsack", EntityTypeID: 1, EntityTypeName: "Monsters"), GeoHero.Entity(EntityID: 3, EntityName: "Skeleton", EntityTypeID: 1, EntityTypeName: "Monsters"), GeoHero.Entity(EntityID: 7, EntityName: "General Store", EntityTypeID: 3, EntityTypeName: "Stores")]
+                
+                self.populateEnts(array: array);
              }
          }.resume()
     }
@@ -106,7 +116,7 @@ class VectorController: UIViewController {
     }
     
     func populatePicker(arr: [String]) {
-        print("populate picker");
+        print("populate picker", arr);
         options = arr;
     }
     
