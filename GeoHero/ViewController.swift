@@ -25,6 +25,7 @@ class ViewController: UIViewController {
     
     let locationManager = CLLocationManager();
     let regionInMeters: Double = 10000;
+    var selectedVector: String = "Intialized";
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -177,6 +178,7 @@ extension ViewController : MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
             if let vectorTitle = view.annotation?.title! {
+                selectedVector = vectorTitle;
                 performSegue(withIdentifier: "encounterVector", sender: nil)
                 print (vectorTitle);
             }
@@ -188,9 +190,14 @@ extension ViewController : MKMapViewDelegate {
             _ = segue.destination as! VectorController;
         } else if segue.identifier == "encounterVector"{
             _ = segue.destination as! EncounterController;
+
+            // Create a new variable to store the instance of PlayerTableViewController
+            let destinationVC = segue.destination as! EncounterController
+            destinationVC.selectedVectorTitle = selectedVector;
+            }
         }
     }
-}
+
 
 
 
