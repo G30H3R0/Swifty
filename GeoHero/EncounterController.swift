@@ -18,7 +18,7 @@ class EncounterController: UIViewController {
     var monsterHealth : Int = 50;
     var monsterDamage : Int = 0;
     
-    @IBOutlet weak var encounterLabel: UILabel!
+    @IBOutlet weak var encounterView: UITextView!
     @IBOutlet weak var encounterInput: UITextField!
     
     struct Entity : Decodable {
@@ -49,18 +49,16 @@ class EncounterController: UIViewController {
                         playerTurn()
                         monsterTurn()
                     } else if input == "run away" {
-                        let escapeChance = Int.random(in: 0 ..< 10)
-                        if (escapeChance > 6){
-                            newLine(newLineString: "You escaped!")
-                        } else {
-                            newLine(newLineString: "Failed to escape monster.")
-                        }
+                        escape()
+                        monsterTurn()
                     } else if input == "a spell" {// for loop of available spells in equipment
                         //for each spell, does match?
+                        monsterTurn()
                     } else if input != "" {
                         newLine(newLineString: "No recognized spell.")
                         helpDialog()
                     }
+                    displayHealth()
                 } else if et == "Items" {
                     //Options
                     if (input == "yes"){
@@ -84,40 +82,59 @@ class EncounterController: UIViewController {
         if (monsterHealth > 0) {
             let md = Int.random(in: 0 ..< 50);
             monsterDamage = md;
-            newLine(newLineString: String(monsterDamage) + "DAMAGE!")
+            newLine(newLineString: String(monsterDamage) + " monster DAMAGE!")
             playerHealth = playerHealth - monsterDamage;
-            displayHealth();
-        } else {
-            newLine(newLineString: "Monster dead, you WON!")
-            monsterHealth = 50;
-            playerHealth = 50;
         }
-        
     }
     
     func playerTurn() {
         if (playerHealth > 0) {
             let pd = Int.random(in: 0 ..< 50);
             playerDamage = pd;
-            newLine(newLineString: String(playerDamage) + "DAMAGE!")
+            newLine(newLineString: String(playerDamage) + " Player DAMAGE!")
             monsterHealth = monsterHealth - playerDamage;
-            displayHealth();
+        }
+    }
+    
+    func escape() {
+        let escapeChance = Int.random(in: 0 ..< 10)
+        if (escapeChance > 6){
+            newLine(newLineString: "You escaped!")
         } else {
-            newLine(newLineString: "You are dead.")
-            playerHealth = 50;
-            monsterHealth = 50;
+            newLine(newLineString: "Failed to escape monster.")
         }
     }
     
     func displayHealth () {
-        newLine(newLineString: "Player health is " + String(playerHealth))
-        newLine(newLineString: "Monster health is " + String(monsterHealth))
+        newLine(newLineString: "Player health is " + String(playerHealth) + ", Monster health is " + String(monsterHealth))
+        
+        if playerHealth < 0 {
+            //newLine(newLineString: "You are DEAD!")
+            restartSimulation(winner: "monster")
+        }
+        if monsterHealth < 0 {
+            //newLine(newLineString: "You WON!")
+            restartSimulation(winner: "player")
+        }
+    }
+    
+    func restartSimulation (winner : String) {
+        encounterView.text = "";
+        playerHealth = 50;
+        monsterHealth = 50;
+        setupEncounterType()
+        if winner == "player" {
+            newLine(newLineString: "You won!")
+        } else if winner == "monster" {
+            newLine(newLineString: "You DIED!")
+        }
+        newLine(newLineString: "Battle re-simulated.")
     }
     
     func setupEncounterType(){
         if let et = entityType, let svt = selectedVectorTitle {
             //say first encounters help dialog for user
-            encounterLabel.text = "You encountered the " + svt + " a/an " + et;
+            encounterView.text = "You encountered the " + svt;
             
             if et == "Monsters" {
                 newLine(newLineString: "Type hit to attack with might.")
@@ -131,7 +148,7 @@ class EncounterController: UIViewController {
                 //unknown type
             }
         } else {
-            encounterLabel.text = "We done fucked up something."
+            encounterView.text = "We done fucked up something."
         }
     }
     
@@ -141,14 +158,13 @@ class EncounterController: UIViewController {
     }
     
     func newLine(newLineString : String?) {
-        if let nl = newLineString, let el = encounterLabel.text {
+        if let nl = newLineString, let el = encounterView.text {
             
-            encounterLabel.text = "\(el) \n \(nl)"
+            encounterView.text = "\(el) \n \(nl)"
         }
     }
     
     func setupForm() {
-        encounterLabel.numberOfLines = 0
         setupEncounterType();
     }
     
