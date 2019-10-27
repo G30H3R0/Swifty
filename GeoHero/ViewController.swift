@@ -85,7 +85,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
     {
         let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "custom pin")
         
-        var pinImage = UIImage(named: "myLocation.png")
+        var pinImage = UIImage(named: "")
         var size = CGSize(width: 50, height: 50)
        
         switch annotation.subtitle {
@@ -100,7 +100,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
             pinImage = UIImage(named: "store.png")
             break
         case "Quests":
-            pinImage = UIImage(named: "quest.png")
+            pinImage = UIImage(named: "quest.jpg")
             break
         default:
             pinImage = UIImage(named: "redPin.png")
@@ -144,7 +144,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
         
         URLSession.shared.dataTask(with: url) { (data, response, err) in
             if let error = err {
-                print ("Error occured, now using Mock data.", error)
+                print ("Error cant connect to server, now using mock data.", error)
                 //Mock Data with current coordinates
                 let vectors = [
                     GeoHero.Vector(CoordinateID: 28, EntityID: 1, EntityName: "Dragon", EntityTypeName: "Monsters", Longitude: -93.263488, Latitude: 44.981995)
@@ -184,7 +184,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print("tap!")
         if control == view.rightCalloutAccessoryView {
             if let vectorTitle = view.annotation?.title! {
                 selectedVector = vectorTitle;
@@ -208,7 +207,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
 }
 
 extension ViewController: CLLocationManagerDelegate {
-    
     //As user moves
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
         guard let location = locations.last else { return }

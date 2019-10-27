@@ -42,8 +42,8 @@ class EncounterController: UIViewController {
             newLine(newLineString: "You said " + ei)
             
             if let et = entityType, let svt = selectedVectorTitle {
-                
                 if et == "Monsters" { //Monster
+                    displayHealth()
                     if input == "hit" {
                         playerTurn()
                         monsterTurn()
@@ -57,7 +57,6 @@ class EncounterController: UIViewController {
                         newLine(newLineString: "No recognized spell.")
                         helpDialog()
                     }
-                    displayHealth()
                 } else if et == "Items" { //Item
                     //Options
                     if (input == "yes") {
@@ -74,7 +73,7 @@ class EncounterController: UIViewController {
                 }
             }
         }
-        encounterInput.text = "";
+        encounterInput.text = ""; //empty input text 
     }
     
     func monsterTurn () {
@@ -141,7 +140,7 @@ class EncounterController: UIViewController {
             if et == "Monsters" {
                 newLine(newLineString: "Type hit to attack with might.")
                 newLine(newLineString: "Or type the name of the spell you'd like to use.")
-                newLine(newLineString: "Or type run away, like a pussy.")
+                newLine(newLineString: "Or type run away.")
             } else if et == "Items" {
                 newLine(newLineString: "Wanna pick it up? Type yes or no.")
             } else if et == "Stores" {
