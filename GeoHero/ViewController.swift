@@ -47,7 +47,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     func checkLocationAuthorization(){
         switch CLLocationManager.authorizationStatus(){
-        case .authorizedWhenInUse:
+        case .authorizedWhenInUse , .authorizedAlways:
             //While using the app
             mapView.showsUserLocation = true
             centerViewOnUserLocation()
@@ -63,9 +63,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
             break
         case .restricted:
             //parental controls
-            break
-        case .authorizedAlways:
-            //run in background
             break
         }
     }
@@ -94,14 +91,24 @@ class ViewController: UIViewController, MKMapViewDelegate {
         switch annotation.subtitle {
         case "Monsters":
             pinImage = UIImage(named: "monsterClaw.png")
+            break
         case "Items":
             pinImage = UIImage(named: "sword.png")
             size = CGSize(width: 60, height: 60)
+            break
         case "Stores":
             pinImage = UIImage(named: "store.png")
+            break
         case "Quests":
             pinImage = UIImage(named: "quest.png")
+            break
         default:
+            pinImage = UIImage(named: "redPin.png")
+            size = CGSize(width: 40, height: 70)
+            break
+        }
+        
+        if (annotation.title == "My Location"){
             pinImage = UIImage(named: "myLocation.png")
             size = CGSize(width: 40, height: 70)
         }
@@ -154,8 +161,8 @@ class ViewController: UIViewController, MKMapViewDelegate {
                 
                 for vector in vectors {
                     //spread coordinates from current location
-                    let newLat = vector.Latitude + Double.random(in: 1 ..< 50) * 0.00001;
-                    let newLong = vector.Longitude + Double.random(in: 1 ..< 50) * 0.00001;
+                    let newLat = vector.Latitude + Double.random(in: -50 ..< 50) * 0.00001;
+                    let newLong = vector.Longitude + Double.random(in: -50 ..< 50) * 0.00001;
                     
                     newVectors.append(Vector(CoordinateID: vector.CoordinateID, EntityID: vector.EntityID, EntityName: vector.EntityName, EntityTypeName: vector.EntityTypeName, Longitude: newLong, Latitude:  newLat))
                 }
