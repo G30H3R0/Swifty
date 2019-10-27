@@ -43,8 +43,7 @@ class EncounterController: UIViewController {
             
             if let et = entityType, let svt = selectedVectorTitle {
                 
-                if et == "Monsters" {
-                    displayHealth()
+                if et == "Monsters" { //Monster
                     if input == "hit" {
                         playerTurn()
                         monsterTurn()
@@ -59,19 +58,19 @@ class EncounterController: UIViewController {
                         helpDialog()
                     }
                     displayHealth()
-                } else if et == "Items" {
+                } else if et == "Items" { //Item
                     //Options
-                    if (input == "yes"){
+                    if (input == "yes") {
                         newLine(newLineString: svt + " added to equipment")
                     } else if (input == "no") {
                         newLine(newLineString: "Fine, then.")
                     } else if (input != "") {
                         helpDialog();
                     }
-                } else if et == "Stores" {
+                } else if et == "Stores" { //Store
                     
-                } else {
-                    //unknown type
+                } else { //Unknown
+                    newLine(newLineString: "Unknow type of entity.")
                 }
             }
         }
@@ -100,6 +99,7 @@ class EncounterController: UIViewController {
         let escapeChance = Int.random(in: 0 ..< 10)
         if (escapeChance > 6){
             newLine(newLineString: "You escaped!")
+            restartSimulation(winner: "escaped")
         } else {
             newLine(newLineString: "Failed to escape monster.")
         }
@@ -108,11 +108,11 @@ class EncounterController: UIViewController {
     func displayHealth () {
         newLine(newLineString: "Player health is " + String(playerHealth) + ", Monster health is " + String(monsterHealth))
         
-        if playerHealth < 0 {
+        if playerHealth < 1 {
             //newLine(newLineString: "You are DEAD!")
             restartSimulation(winner: "monster")
         }
-        if monsterHealth < 0 {
+        else if monsterHealth < 1 {
             //newLine(newLineString: "You WON!")
             restartSimulation(winner: "player")
         }
@@ -127,6 +127,8 @@ class EncounterController: UIViewController {
             newLine(newLineString: "You won!")
         } else if winner == "monster" {
             newLine(newLineString: "You DIED!")
+        } else if winner == "escaped" {
+            newLine(newLineString: "You escaped.")
         }
         newLine(newLineString: "Battle re-simulated.")
     }
@@ -154,7 +156,7 @@ class EncounterController: UIViewController {
     
     func helpDialog () {
         newLine(newLineString: "The fuck you mean?")
-        newLine(newLineString: "Type Exit to leave encounter, or swipe the window down to leave.")
+        newLine(newLineString: "Swipe the window down to leave encounter.")
     }
     
     func newLine(newLineString : String?) {
@@ -181,10 +183,8 @@ class EncounterController: UIViewController {
                 print("found the type", ent.EntityTypeName, "for", ent.EntityName)
                 break;
             } else {
-                print("didnt find shit for types")
+                //print("didnt find shit for types")
             }
         }
-        
     }
-    
 }

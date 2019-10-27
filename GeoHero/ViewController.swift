@@ -15,17 +15,18 @@ struct Vector : Decodable {
     let EntityID : Int
     let EntityName : String
     let EntityTypeName : String
-    let Longitude : Double
-    let Latitude : Double
+    var Longitude : Double
+    var Latitude : Double
 }
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     
     let locationManager = CLLocationManager();
     let regionInMeters: Double = 10000;
     var selectedVector: String = "Intialized";
+    var vectors : [Vector] = [Vector]();
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +51,7 @@ class ViewController: UIViewController {
             //While using the app
             mapView.showsUserLocation = true
             centerViewOnUserLocation()
-            getNearEntities()
+            fetchNearEntities()
             locationManager.startUpdatingLocation()
             break
         case .denied:
@@ -83,48 +84,74 @@ class ViewController: UIViewController {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
-    func getNearEntities(){
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?
+    {
+        let pinImage = UIImage(named: "monsterClaw.png")
+        let size = CGSize(width: 50, height: 50)
+        UIGraphicsBeginImageContext(size)
+        pinImage!.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "custom pin")
+        //annotationView.image =  UIImage(named: "monsterClaw.png")
+        annotationView.image = resizedImage
+        annotationView.rightCalloutAccessoryView = UIButton(type: .infoDark)
+        annotationView.canShowCallout = true
+        return annotationView
+    }
+    
+    func completeVectorsFetch (array: [Vector]) {
+        vectors = array;
+        populateVectors();
+    }
+    
+    func populateVectors () {
+        for vector in vectors {
+            let missionDoloresCoor = CLLocationCoordinate2DMake(vector.Latitude, vector.Longitude)
+            let pin = CustomAnnotation(coor: missionDoloresCoor)
+            pin.title = vector.EntityName
+            self.mapView.addAnnotation(pin)
+        }
+    }
+    
+    func fetchNearEntities(){
         guard let long = locationManager.location?.coordinate.longitude, let lat = locationManager.location?.coordinate.latitude else { return }
         guard let url = URL(string: "http://165.22.136.184:5000/coordinates/entitiesClose/\(long)/\(lat)") else {return}
         
         URLSession.shared.dataTask(with: url) { (data, response, err) in
-            
             if let error = err {
                 print ("Error occured, now using Mock data.", error)
                 //Mock Data with current coordinates
-                let vectors = [GeoHero.Vector(CoordinateID: 28, EntityID: 1, EntityName: "Dragon", EntityTypeName: "Monsters", Longitude: -93.263488, Latitude: 44.981995), GeoHero.Vector(CoordinateID: 34, EntityID: 2, EntityName: "Goblin", EntityTypeName: "Monsters", Longitude: -93.263506, Latitude: 44.981995), GeoHero.Vector(CoordinateID: 31, EntityID: 4, EntityName: "Sword", EntityTypeName: "Items", Longitude: -93.263282, Latitude: 44.981873), GeoHero.Vector(CoordinateID: 32, EntityID: 5, EntityName: "Staff", EntityTypeName: "Items", Longitude: -93.263426, Latitude: 44.981995), GeoHero.Vector(CoordinateID: 33, EntityID: 6, EntityName: "Bow", EntityTypeName: "Items", Longitude: -93.263493, Latitude: 44.981995), GeoHero.Vector(CoordinateID: 35, EntityID: 7, EntityName: "General Store", EntityTypeName: "Stores", Longitude: -93.263462, Latitude: 44.981964), GeoHero.Vector(CoordinateID: 29, EntityID: 13, EntityName: "Greg the Ogre", EntityTypeName: "Monsters", Longitude: -93.263521, Latitude: 44.981934)]
+                let vectors = [
+                    GeoHero.Vector(CoordinateID: 28, EntityID: 1, EntityName: "Dragon", EntityTypeName: "Monsters", Longitude: -93.263488, Latitude: 44.981995)
+                    , GeoHero.Vector(CoordinateID: 34, EntityID: 2, EntityName: "Goblin", EntityTypeName: "Monsters", Longitude: -93.263506, Latitude: 44.981995)
+                    , GeoHero.Vector(CoordinateID: 31, EntityID: 4, EntityName: "Sword", EntityTypeName: "Items", Longitude: -93.263282, Latitude: 44.981873)
+                    , GeoHero.Vector(CoordinateID: 32, EntityID: 5, EntityName: "Staff", EntityTypeName: "Items", Longitude: -93.263426, Latitude: 44.981995)
+                    , GeoHero.Vector(CoordinateID: 33, EntityID: 6, EntityName: "Bow", EntityTypeName: "Items", Longitude: -93.263493, Latitude: 44.981995)
+                    , GeoHero.Vector(CoordinateID: 35, EntityID: 7, EntityName: "General Store", EntityTypeName: "Stores", Longitude: -93.263462, Latitude: 44.981964)
+                    , GeoHero.Vector(CoordinateID: 29, EntityID: 13, EntityName: "Greg the Ogre", EntityTypeName: "Monsters", Longitude: -93.263521, Latitude: 44.981934)
+                ]
                 
+                //Cant change vectors array, create new one and mutate
+                var newVectors = [Vector]();
                 
                 for vector in vectors {
-                    //spread coordinates
-                    let randomLat = Double.random(in: 0 ..< 30) * 0.00001;
-                    let randomLong = Double.random(in: 0 ..< 30) * 0.00001;
-                    print ("random decimal", randomLat, randomLong);
+                    //spread coordinates from current location
+                    let newLat = vector.Latitude + Double.random(in: 1 ..< 50) * 0.00001;
+                    let newLong = vector.Longitude + Double.random(in: 1 ..< 50) * 0.00001;
                     
-                    print(vector);
-                    //add vector to map
-                    let newVector = MKPointAnnotation();
-                    newVector.title = vector.EntityName
-                    newVector.subtitle = vector.EntityTypeName
-                    newVector.coordinate = CLLocationCoordinate2D(latitude: lat + randomLat, longitude: long + randomLong)
-                    self.mapView.addAnnotation(newVector)
+                    newVectors.append(Vector(CoordinateID: vector.CoordinateID, EntityID: vector.EntityID, EntityName: vector.EntityName, EntityTypeName: vector.EntityTypeName, Longitude: newLong, Latitude:  newLat))
                 }
+                
+                self.completeVectorsFetch(array: newVectors);
+                
             } else {
                 guard let data = data else { return }
                 
                 do {
                     let vectors = try JSONDecoder().decode([Vector].self, from: data)
                     
-                    print ("vectors", vectors)
-                    
-                    for vector in vectors {
-                        print(vector);
-                        let newVector = MKPointAnnotation();
-                        newVector.title = vector.EntityName
-                        newVector.subtitle = vector.EntityTypeName
-                        newVector.coordinate = CLLocationCoordinate2D(latitude: vector.Latitude, longitude: vector.Longitude)
-                        self.mapView.addAnnotation(newVector)
-                    }
+                    self.completeVectorsFetch(array: vectors)
                 } catch let JSONerror {
                     print ("error parsing JSON entities", JSONerror)
                 }
@@ -132,14 +159,20 @@ class ViewController: UIViewController {
         }.resume()
     }
     
-
-    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        if control == view.rightCalloutAccessoryView {
+                    if let vectorTitle = view.annotation?.title! {
+                        selectedVector = vectorTitle;
+                        performSegue(withIdentifier: "encounterVector", sender: nil)
+                    }
+                }
+    }
 }
 
 extension ViewController: CLLocationManagerDelegate {
     
     //As user moves
-    func locationManaer(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
         guard let location = locations.last else { return }
         let center = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
         let region = MKCoordinateRegion.init(center: center, span: MKCoordinateSpanMake(0.001, 0.001))
@@ -150,53 +183,6 @@ extension ViewController: CLLocationManagerDelegate {
         
     }
 }
-
-extension ViewController : MKMapViewDelegate {
-    
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard annotation is MKPointAnnotation else { print("no mkpointannotaions"); return nil }
-        
-        let reuseId = "pin"
-        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
-        
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView!.canShowCallout = true
-            pinView!.rightCalloutAccessoryView = UIButton(type: .infoDark)
-            pinView!.pinTintColor = UIColor.red
-        }
-        else {
-            pinView!.annotation = annotation
-        }
-        return pinView
-    }
-    
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView){
-        print ("tapped on a pin");
-    }
-    
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        if control == view.rightCalloutAccessoryView {
-            if let vectorTitle = view.annotation?.title! {
-                selectedVector = vectorTitle;
-                performSegue(withIdentifier: "encounterVector", sender: nil)
-                print (vectorTitle);
-            }
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "addVectorSegue"{
-            _ = segue.destination as! VectorController;
-        } else if segue.identifier == "encounterVector"{
-            _ = segue.destination as! EncounterController;
-
-            // Create a new variable to store the instance of PlayerTableViewController
-            let destinationVC = segue.destination as! EncounterController
-            destinationVC.selectedVectorTitle = selectedVector;
-            }
-        }
-    }
 
 
 
