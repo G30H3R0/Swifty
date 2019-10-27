@@ -86,14 +86,30 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView?
     {
-        let pinImage = UIImage(named: "monsterClaw.png")
-        let size = CGSize(width: 50, height: 50)
+        let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "custom pin")
+        
+        var pinImage = UIImage(named: "myLocation.png")
+        var size = CGSize(width: 50, height: 50)
+       
+        switch annotation.subtitle {
+        case "Monsters":
+            pinImage = UIImage(named: "monsterClaw.png")
+        case "Items":
+            pinImage = UIImage(named: "sword.png")
+            size = CGSize(width: 60, height: 60)
+        case "Stores":
+            pinImage = UIImage(named: "store.png")
+        case "Quests":
+            pinImage = UIImage(named: "quest.png")
+        default:
+            pinImage = UIImage(named: "myLocation.png")
+            size = CGSize(width: 40, height: 70)
+        }
+        
         UIGraphicsBeginImageContext(size)
         pinImage!.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
         
-        let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "custom pin")
-        //annotationView.image =  UIImage(named: "monsterClaw.png")
         annotationView.image = resizedImage
         annotationView.rightCalloutAccessoryView = UIButton(type: .infoDark)
         annotationView.canShowCallout = true
@@ -107,9 +123,10 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     func populateVectors () {
         for vector in vectors {
-            let missionDoloresCoor = CLLocationCoordinate2DMake(vector.Latitude, vector.Longitude)
-            let pin = CustomAnnotation(coor: missionDoloresCoor)
+            let vec = CLLocationCoordinate2DMake(vector.Latitude, vector.Longitude)
+            let pin = CustomAnnotation(coor: vec)
             pin.title = vector.EntityName
+            pin.subtitle = vector.EntityTypeName
             self.mapView.addAnnotation(pin)
         }
     }
@@ -160,13 +177,27 @@ class ViewController: UIViewController, MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        print("tap!")
         if control == view.rightCalloutAccessoryView {
-                    if let vectorTitle = view.annotation?.title! {
-                        selectedVector = vectorTitle;
-                        performSegue(withIdentifier: "encounterVector", sender: nil)
-                    }
-                }
+            if let vectorTitle = view.annotation?.title! {
+                selectedVector = vectorTitle;
+                performSegue(withIdentifier: "encounterVector", sender: nil)
+            }
+        }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "addVectorSegue"{
+            _ = segue.destination as! VectorController;
+        } else if segue.identifier == "encounterVector"{
+            _ = segue.destination as! EncounterController;
+            
+            //print("selected vector", selectedVector)
+            let destinationVC = segue.destination as! EncounterController
+            destinationVC.selectedVectorTitle = selectedVector;
+        }
+    }
+    
 }
 
 extension ViewController: CLLocationManagerDelegate {
