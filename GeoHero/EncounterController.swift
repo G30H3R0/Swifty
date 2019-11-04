@@ -73,7 +73,7 @@ class EncounterController: UIViewController {
                 }
             }
         }
-        encounterInput.text = ""; //empty input text 
+        encounterInput.text = ""; //empty input text
     }
     
     func monsterTurn () {
@@ -138,7 +138,7 @@ class EncounterController: UIViewController {
             encounterView.text = "You encountered the " + svt;
             
             if et == "Monsters" {
-                newLine(newLineString: "Type hit to attack with might.")
+                newLine(newLineString: "Type hit to attack.")
                 newLine(newLineString: "Or type the name of the spell you'd like to use.")
                 newLine(newLineString: "Or type run away.")
             } else if et == "Items" {
@@ -160,7 +160,6 @@ class EncounterController: UIViewController {
     
     func newLine(newLineString : String?) {
         if let nl = newLineString, let el = encounterView.text {
-            
             encounterView.text = "\(el) \n \(nl)"
         }
     }

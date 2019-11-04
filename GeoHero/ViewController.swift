@@ -27,6 +27,8 @@ class ViewController: UIViewController, MKMapViewDelegate {
     let regionInMeters: Double = 10000;
     var selectedVector: String = "Intialized";
     var vectors : [Vector] = [Vector]();
+    var userLongitude : Double?;
+    var userLatitude : Double?;
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +52,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
         case .authorizedWhenInUse , .authorizedAlways:
             //While using the app
             mapView.showsUserLocation = true
+            getCurrentCoordinates()
             centerViewOnUserLocation()
             fetchNearEntities()
             locationManager.startUpdatingLocation()
@@ -65,6 +68,14 @@ class ViewController: UIViewController, MKMapViewDelegate {
             //parental controls
             break
         }
+    }
+    
+    func getCurrentCoordinates () {
+        guard let long = locationManager.location?.coordinate.longitude
+            , let lat = locationManager.location?.coordinate.latitude else { return };
+        
+        userLongitude = long;
+        userLatitude = lat;
     }
     
     func checkLocationServices(){
@@ -126,6 +137,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
     func completeVectorsFetch (array: [Vector]) {
         vectors = array;
         populateVectors();
+        print ("vectors", vectors)
     }
     
     func populateVectors () {
@@ -144,31 +156,8 @@ class ViewController: UIViewController, MKMapViewDelegate {
         
         URLSession.shared.dataTask(with: url) { (data, response, err) in
             if let error = err {
-                print ("Error cant connect to server, now using mock data.", error)
-                //Mock Data with current coordinates
-                let vectors = [
-                    GeoHero.Vector(CoordinateID: 28, EntityID: 1, EntityName: "Dragon", EntityTypeName: "Monsters", Longitude: -93.263488, Latitude: 44.981995)
-                    , GeoHero.Vector(CoordinateID: 34, EntityID: 2, EntityName: "Goblin", EntityTypeName: "Monsters", Longitude: -93.263506, Latitude: 44.981995)
-                    , GeoHero.Vector(CoordinateID: 31, EntityID: 4, EntityName: "Sword", EntityTypeName: "Items", Longitude: -93.263282, Latitude: 44.981873)
-                    , GeoHero.Vector(CoordinateID: 32, EntityID: 5, EntityName: "Staff", EntityTypeName: "Items", Longitude: -93.263426, Latitude: 44.981995)
-                    , GeoHero.Vector(CoordinateID: 33, EntityID: 6, EntityName: "Bow", EntityTypeName: "Items", Longitude: -93.263493, Latitude: 44.981995)
-                    , GeoHero.Vector(CoordinateID: 35, EntityID: 7, EntityName: "General Store", EntityTypeName: "Stores", Longitude: -93.263462, Latitude: 44.981964)
-                    , GeoHero.Vector(CoordinateID: 29, EntityID: 13, EntityName: "Greg the Ogre", EntityTypeName: "Monsters", Longitude: -93.263521, Latitude: 44.981934)
-                ]
-                
-                //Cant change vectors array, create new one and mutate
-                var newVectors = [Vector]();
-                
-                for vector in vectors {
-                    //spread coordinates from current location
-                    let newLat = vector.Latitude + Double.random(in: -50 ..< 50) * 0.00001;
-                    let newLong = vector.Longitude + Double.random(in: -50 ..< 50) * 0.00001;
-                    
-                    newVectors.append(Vector(CoordinateID: vector.CoordinateID, EntityID: vector.EntityID, EntityName: vector.EntityName, EntityTypeName: vector.EntityTypeName, Longitude: newLong, Latitude:  newLat))
-                }
-                
-                self.completeVectorsFetch(array: newVectors);
-                
+                print("error connecting to server", error)
+                self.getMockCoordinates()
             } else {
                 guard let data = data else { return }
                 
@@ -181,6 +170,37 @@ class ViewController: UIViewController, MKMapViewDelegate {
                 }
             }
         }.resume()
+    }
+    
+    func getMockCoordinates () {
+        //Display error message
+//        let alert = UIAlertController(title: "Cant connect to server.", message: "Using mock data instead.", preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "Cant connect to server, using mock data.", style: UIAlertAction.Style.default, handler: nil))
+//        self.present(alert, animated:true)
+        //Mock Data with current coordinates
+        let vectors = [
+            GeoHero.Vector(CoordinateID: 28, EntityID: 1, EntityName: "Dragon", EntityTypeName: "Monsters", Longitude: -93.263488, Latitude: 44.981995)
+            , GeoHero.Vector(CoordinateID: 34, EntityID: 2, EntityName: "Goblin", EntityTypeName: "Monsters", Longitude: -93.263506, Latitude: 44.981995)
+            , GeoHero.Vector(CoordinateID: 31, EntityID: 4, EntityName: "Sword", EntityTypeName: "Items", Longitude: -93.263282, Latitude: 44.981873)
+            , GeoHero.Vector(CoordinateID: 32, EntityID: 5, EntityName: "Staff", EntityTypeName: "Items", Longitude: -93.263426, Latitude: 44.981995)
+            , GeoHero.Vector(CoordinateID: 33, EntityID: 6, EntityName: "Bow", EntityTypeName: "Items", Longitude: -93.263493, Latitude: 44.981995)
+            , GeoHero.Vector(CoordinateID: 35, EntityID: 7, EntityName: "General Store", EntityTypeName: "Stores", Longitude: -93.263462, Latitude: 44.981964)
+            , GeoHero.Vector(CoordinateID: 29, EntityID: 13, EntityName: "Greg the Ogre", EntityTypeName: "Monsters", Longitude: -93.263521, Latitude: 44.981934)
+        ]
+        
+        //Cant change vectors array, create new one and mutate
+        var newVectors = [Vector]();
+        if let long = userLongitude, let lat = userLatitude {
+            for vector in vectors {
+                //spread coordinates from current location
+                let newLat = lat + Double.random(in: -50 ..< 50) * 0.00001;
+                let newLong = long + Double.random(in: -50 ..< 50) * 0.00001;
+                
+                newVectors.append(Vector(CoordinateID: vector.CoordinateID, EntityID: vector.EntityID, EntityName: vector.EntityName, EntityTypeName: vector.EntityTypeName, Longitude: newLong, Latitude:  newLat))
+            }
+        }
+        
+        self.completeVectorsFetch(array: newVectors);
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {

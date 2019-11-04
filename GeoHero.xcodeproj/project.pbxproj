@@ -24,7 +24,6 @@
 		9CD21E5023652B440066DBCE /* store.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD21E4F23652B440066DBCE /* store.png */; };
 		9CD21E542365325C0066DBCE /* redPin.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD21E532365325C0066DBCE /* redPin.png */; };
 		9CD21E56236535A00066DBCE /* quest.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9CD21E55236535A00066DBCE /* quest.jpg */; };
-		9CD21E582365F48B0066DBCE /* monster.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9CD21E572365F48B0066DBCE /* monster.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,7 +67,6 @@
 		9CD21E4F23652B440066DBCE /* store.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = store.png; path = ../../../../../../Downloads/store.png; sourceTree = "<group>"; };
 		9CD21E532365325C0066DBCE /* redPin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redPin.png; path = ../../../../../../Downloads/redPin.png; sourceTree = "<group>"; };
 		9CD21E55236535A00066DBCE /* quest.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = quest.jpg; path = ../../../../../../Downloads/quest.jpg; sourceTree = "<group>"; };
-		9CD21E572365F48B0066DBCE /* monster.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = monster.jpg; path = ../../../../../../Downloads/monster.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,7 +153,6 @@
 		9CD21DF1235D3F460066DBCE /* Annotation Image */ = {
 			isa = PBXGroup;
 			children = (
-				9CD21E572365F48B0066DBCE /* monster.jpg */,
 				9CD21E55236535A00066DBCE /* quest.jpg */,
 				9CD21E532365325C0066DBCE /* redPin.png */,
 				9CD21E4F23652B440066DBCE /* store.png */,
@@ -278,7 +275,6 @@
 				9C911E3622E68A5500307DDF /* Main.storyboard in Resources */,
 				9CD21E542365325C0066DBCE /* redPin.png in Resources */,
 				9CD21E56236535A00066DBCE /* quest.jpg in Resources */,
-				9CD21E582365F48B0066DBCE /* monster.jpg in Resources */,
 				9CD21E482365144E0066DBCE /* sword.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
