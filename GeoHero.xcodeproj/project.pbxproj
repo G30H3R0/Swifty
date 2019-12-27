@@ -17,13 +17,7 @@
 		9C911E3E22E68A5A00307DDF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C911E3C22E68A5A00307DDF /* LaunchScreen.storyboard */; };
 		9C911E4922E68A5A00307DDF /* GeoHeroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C911E4822E68A5A00307DDF /* GeoHeroTests.swift */; };
 		9C911E5422E68A5A00307DDF /* GeoHeroUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C911E5322E68A5A00307DDF /* GeoHeroUITests.swift */; };
-		9CD21DF5235D412A0066DBCE /* monsterClaw.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD21DF4235D412A0066DBCE /* monsterClaw.png */; };
 		9CD21E44236511E30066DBCE /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD21E43236511E30066DBCE /* CustomAnnotation.swift */; };
-		9CD21E482365144E0066DBCE /* sword.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD21E452365144D0066DBCE /* sword.png */; };
-		9CD21E4C236528090066DBCE /* myLocation.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD21E4B236528090066DBCE /* myLocation.png */; };
-		9CD21E5023652B440066DBCE /* store.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD21E4F23652B440066DBCE /* store.png */; };
-		9CD21E542365325C0066DBCE /* redPin.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD21E532365325C0066DBCE /* redPin.png */; };
-		9CD21E56236535A00066DBCE /* quest.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9CD21E55236535A00066DBCE /* quest.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,13 +54,7 @@
 		9C911E4F22E68A5A00307DDF /* GeoHeroUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GeoHeroUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C911E5322E68A5A00307DDF /* GeoHeroUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoHeroUITests.swift; sourceTree = "<group>"; };
 		9C911E5522E68A5A00307DDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9CD21DF4235D412A0066DBCE /* monsterClaw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = monsterClaw.png; path = ../../../../../../Downloads/monsterClaw.png; sourceTree = "<group>"; };
 		9CD21E43236511E30066DBCE /* CustomAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
-		9CD21E452365144D0066DBCE /* sword.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sword.png; path = ../../../../../../Downloads/sword.png; sourceTree = "<group>"; };
-		9CD21E4B236528090066DBCE /* myLocation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = myLocation.png; path = ../../../../../../Downloads/myLocation.png; sourceTree = "<group>"; };
-		9CD21E4F23652B440066DBCE /* store.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = store.png; path = ../../../../../../Downloads/store.png; sourceTree = "<group>"; };
-		9CD21E532365325C0066DBCE /* redPin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = redPin.png; path = ../../../../../../Downloads/redPin.png; sourceTree = "<group>"; };
-		9CD21E55236535A00066DBCE /* quest.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = quest.jpg; path = ../../../../../../Downloads/quest.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,7 +105,6 @@
 		9C911E2F22E68A5500307DDF /* GeoHero */ = {
 			isa = PBXGroup;
 			children = (
-				9CD21DF1235D3F460066DBCE /* Annotation Image */,
 				9C911E3022E68A5500307DDF /* AppDelegate.swift */,
 				9C911E3222E68A5500307DDF /* ViewController.swift */,
 				9CD21E43236511E30066DBCE /* CustomAnnotation.swift */,
@@ -148,19 +135,6 @@
 				9C911E5522E68A5A00307DDF /* Info.plist */,
 			);
 			path = GeoHeroUITests;
-			sourceTree = "<group>";
-		};
-		9CD21DF1235D3F460066DBCE /* Annotation Image */ = {
-			isa = PBXGroup;
-			children = (
-				9CD21E55236535A00066DBCE /* quest.jpg */,
-				9CD21E532365325C0066DBCE /* redPin.png */,
-				9CD21E4F23652B440066DBCE /* store.png */,
-				9CD21E4B236528090066DBCE /* myLocation.png */,
-				9CD21E452365144D0066DBCE /* sword.png */,
-				9CD21DF4235D412A0066DBCE /* monsterClaw.png */,
-			);
-			path = "Annotation Image";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,15 +241,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9CD21E4C236528090066DBCE /* myLocation.png in Resources */,
-				9CD21E5023652B440066DBCE /* store.png in Resources */,
 				9C911E3E22E68A5A00307DDF /* LaunchScreen.storyboard in Resources */,
-				9CD21DF5235D412A0066DBCE /* monsterClaw.png in Resources */,
 				9C911E3B22E68A5A00307DDF /* Assets.xcassets in Resources */,
 				9C911E3622E68A5500307DDF /* Main.storyboard in Resources */,
-				9CD21E542365325C0066DBCE /* redPin.png in Resources */,
-				9CD21E56236535A00066DBCE /* quest.jpg in Resources */,
-				9CD21E482365144E0066DBCE /* sword.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
