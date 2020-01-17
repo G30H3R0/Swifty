@@ -51,7 +51,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     func centerViewOnUserLocation() {
         if let location = locationManager.location?.coordinate {
-            let region = MKCoordinateRegion.init(center: location, span: MKCoordinateSpanMake(0.005, 0.005)) //sets a lock mechanism of scrolling out too much will eventually center back
+            let region = MKCoordinateRegion.init(center: location, span: MKCoordinateSpanMake(0.1, 0.1)) //sets a lock mechanism of scrolling out too much will eventually center back
             mapView.setRegion(region, animated: true )
         }
     }
@@ -110,7 +110,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
        
         switch annotation.subtitle {
         case "Monsters":
-            pinImage = UIImage(named: "smonsterClaw.png")
+            pinImage = UIImage(named: "monsterClaw.png")
             break
         case "Items":
             pinImage = UIImage(named: "sword.png")
@@ -167,7 +167,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
             URLSession.shared.dataTask(with: url) { (data, response, err) in
                 if let error = err {
                     print("error connecting to server. using mock data ", error)
-                    self.getMockCoordinates()
+                    //self.getMockCoordinates()
                 } else {
                     guard let data = data else { return }
                     
@@ -243,19 +243,27 @@ class ViewController: UIViewController, MKMapViewDelegate {
                 //need to add functionaliy to display to the user which entity type to use
                 //and what entity name to use
             
-            if let randomVector = vectors.randomElement() {
+            let mock = [
+                GeoHero.Vector(CoordinateID: 28, EntityID: 1, EntityName: "Dragon", EntityTypeName: "Monsters", Longitude: -93.263488, Latitude: 44.981995)
+                , GeoHero.Vector(CoordinateID: 34, EntityID: 2, EntityName: "Goblin", EntityTypeName: "Monsters", Longitude: -93.263506, Latitude: 44.981995)
+                , GeoHero.Vector(CoordinateID: 31, EntityID: 4, EntityName: "Sword", EntityTypeName: "Items", Longitude: -93.263282, Latitude: 44.981873)
+                , GeoHero.Vector(CoordinateID: 32, EntityID: 5, EntityName: "Staff", EntityTypeName: "Items", Longitude: -93.263426, Latitude: 44.981995)
+                , GeoHero.Vector(CoordinateID: 33, EntityID: 6, EntityName: "Bow", EntityTypeName: "Items", Longitude: -93.263493, Latitude: 44.981995)
+                , GeoHero.Vector(CoordinateID: 35, EntityID: 7, EntityName: "General Store", EntityTypeName: "Stores", Longitude: -93.263462, Latitude: 44.981964)
+                , GeoHero.Vector(CoordinateID: 29, EntityID: 13, EntityName: "Greg the Ogre", EntityTypeName: "Monsters", Longitude: -93.263521, Latitude: 44.981934)
+            ]
+            
+            if let randomVector = mock.randomElement() {
                 //add new vector to database
                 
                 //for now add random coordinate with 0 CoordinateID
                 vectors.append(Vector(CoordinateID: 0, EntityID: randomVector.EntityID , EntityName: randomVector.EntityName, EntityTypeName: randomVector.EntityTypeName, Longitude: location.longitude, Latitude:  location.latitude))
                 print(randomVector.EntityName, "added!")
                 print("added new vectors", vectors)
-                //delete all annotations
-                for pin in mapView.annotations {
-                    mapView.removeAnnotation(pin)
-                }
-                //get New entities
-                fetchNearEntities()
+                
+                var newArray = [Vector]();
+                newArray.append(Vector(CoordinateID: 0, EntityID: randomVector.EntityID , EntityName: randomVector.EntityName, EntityTypeName: randomVector.EntityTypeName, Longitude: location.longitude, Latitude:  location.latitude))
+                self.completeVectorsFetch(array: newArray)
                 
             } else {
                 print ("what the hell vectors is empty?")
