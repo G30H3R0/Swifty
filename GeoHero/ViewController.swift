@@ -101,7 +101,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
        
         switch annotation.subtitle {
         case "Monsters":
-            pinImage = UIImage(named: "monsterClaw.png")
+            pinImage = UIImage(named: "smonsterClaw.png")
             break
         case "Items":
             pinImage = UIImage(named: "sword.png")
@@ -125,7 +125,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
         }
         
         UIGraphicsBeginImageContext(size)
-        pinImage!.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        pinImage?.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
         
         annotationView.image = resizedImage
@@ -229,7 +229,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
 
 extension ViewController: CLLocationManagerDelegate {
     //As user moves
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         let center = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
         let region = MKCoordinateRegion.init(center: center, span: MKCoordinateSpanMake(0.001, 0.001))
@@ -240,11 +240,3 @@ extension ViewController: CLLocationManagerDelegate {
         
     }
 }
-
-
-
-
-
-
-
-
