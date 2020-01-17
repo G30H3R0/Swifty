@@ -42,7 +42,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     func centerViewOnUserLocation() {
         if let location = locationManager.location?.coordinate {
-            let region = MKCoordinateRegion.init(center: location, span: MKCoordinateSpanMake(0.001, 0.001))
+            let region = MKCoordinateRegion.init(center: location, span: MKCoordinateSpanMake(0.005, 0.005)) //sets a lock mechanism of scrolling out too much will eventually center back
             mapView.setRegion(region, animated: true )
         }
     }
@@ -131,6 +131,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
         annotationView.image = resizedImage
         annotationView.rightCalloutAccessoryView = UIButton(type: .infoDark)
         annotationView.canShowCallout = true
+        
         return annotationView
     }
     
@@ -232,7 +233,7 @@ extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         let center = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
-        let region = MKCoordinateRegion.init(center: center, span: MKCoordinateSpanMake(0.001, 0.001))
+        let region = MKCoordinateRegion.init(center: center, span: MKCoordinateSpanMake(0.005, 0.005)) //sets default region and locks it
         mapView.setRegion(region, animated: true)
     }
     
