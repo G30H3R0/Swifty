@@ -34,10 +34,19 @@ class ViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         mapView.delegate = self
         checkLocationServices()
+        setupMapView()
     }
     
     @IBAction func addVector(_ sender: Any) {
         performSegue(withIdentifier: "addVectorSegue", sender: nil)
+    }
+    
+    func setupMapView() {
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: Selector(("triggerTouchAction")))
+        mapView.addGestureRecognizer(tapRecognizer)
+        
+        let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(addAnnotation(longGesture:)))
+        mapView.addGestureRecognizer(longGesture)
     }
     
     func centerViewOnUserLocation() {
@@ -207,10 +216,49 @@ class ViewController: UIViewController, MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+
         if control == view.rightCalloutAccessoryView {
             if let vectorTitle = view.annotation?.title! {
                 selectedVector = vectorTitle;
                 performSegue(withIdentifier: "encounterVector", sender: nil)
+            }
+        }
+    }
+    
+    @IBAction func triggerTouchAction() {
+        print("tapped map" )
+    }
+    
+    
+    @objc func addAnnotation(longGesture: UIGestureRecognizer) {
+
+        if longGesture.state == UIGestureRecognizerState.ended { //longpress ended
+            let touchPoint = longGesture.location(in: mapView)
+            let location = mapView.convert(touchPoint, toCoordinateFrom: mapView)
+    
+            print ("lat", location.latitude)
+            print ("long", location.longitude)
+            
+            //add random vector for now
+                //need to add functionaliy to display to the user which entity type to use
+                //and what entity name to use
+            
+            if let randomVector = vectors.randomElement() {
+                //add new vector to database
+                
+                //for now add random coordinate with 0 CoordinateID
+                vectors.append(Vector(CoordinateID: 0, EntityID: randomVector.EntityID , EntityName: randomVector.EntityName, EntityTypeName: randomVector.EntityTypeName, Longitude: location.longitude, Latitude:  location.latitude))
+                print(randomVector.EntityName, "added!")
+                print("added new vectors", vectors)
+                //delete all annotations
+                for pin in mapView.annotations {
+                    mapView.removeAnnotation(pin)
+                }
+                //get New entities
+                fetchNearEntities()
+                
+            } else {
+                print ("what the hell vectors is empty?")
             }
         }
     }
