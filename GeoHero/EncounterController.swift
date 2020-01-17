@@ -154,7 +154,7 @@ class EncounterController: UIViewController {
     }
     
     func helpDialog () {
-        newLine(newLineString: "The fuck you mean?")
+        newLine(newLineString: "Unrecognized command.")
         newLine(newLineString: "Swipe the window down to leave encounter.")
     }
     
