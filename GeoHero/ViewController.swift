@@ -47,7 +47,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
         }
     }
     
-    func checkLocationAuthorization(){
+    func checkLocationAuthorization () {
         switch CLLocationManager.authorizationStatus(){
         case .authorizedWhenInUse , .authorizedAlways:
             //While using the app
@@ -179,6 +179,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
 //        let alert = UIAlertController(title: "Cant connect to server.", message: "Using mock data instead.", preferredStyle: .alert)
 //        alert.addAction(UIAlertAction(title: "Cant connect to server, using mock data.", style: UIAlertAction.Style.default, handler: nil))
 //        self.present(alert, animated:true)
+        
         //Mock Data with current coordinates
         let vectors = [
             GeoHero.Vector(CoordinateID: 28, EntityID: 1, EntityName: "Dragon", EntityTypeName: "Monsters", Longitude: -93.263488, Latitude: 44.981995)
@@ -233,7 +234,7 @@ extension ViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         let center = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
-        let region = MKCoordinateRegion.init(center: center, span: MKCoordinateSpanMake(0.005, 0.005)) //sets default region and locks it
+        let region = MKCoordinateRegion.init(center: center, span: MKCoordinateSpanMake(0.001, 0.001)) //sets default region and locks it
         mapView.setRegion(region, animated: true)
     }
     
