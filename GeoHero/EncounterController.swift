@@ -32,7 +32,6 @@ class EncounterController: UIViewController {
         super.viewDidLoad()
         findEntityType();
         setupForm();
-        
     }
     
     @IBAction func encounterButton(_ sender: UIButton) {
@@ -80,7 +79,8 @@ class EncounterController: UIViewController {
         if (monsterHealth > 0) {
             let md = Int.random(in: 0 ..< 50);
             monsterDamage = md;
-            newLine(newLineString: String(monsterDamage) + " monster DAMAGE!")
+            //newLine(newLineString: String(monsterDamage) + " monster DAMAGE!")
+            
             playerHealth = playerHealth - monsterDamage;
         }
     }
@@ -132,7 +132,7 @@ class EncounterController: UIViewController {
         newLine(newLineString: "Battle re-simulated.")
     }
     
-    func setupEncounterType(){
+    func setupEncounterType() {
         if let et = entityType, let svt = selectedVectorTitle {
             //say first encounters help dialog for user
             encounterView.text = "You encountered the " + svt;
@@ -158,8 +158,14 @@ class EncounterController: UIViewController {
         newLine(newLineString: "Swipe the window down to leave encounter.")
     }
     
-    func newLine(newLineString : String?) {
+    func newLine(newLineString : String? ) {
         if let nl = newLineString, let el = encounterView.text {
+            encounterView.text = "\(el) \n \(nl)"
+        }
+    }
+    //       myMutableString.addAttribute(NSForegroundColorAttributeName, value: UIColor.redColor(), range: NSRange(location:2,length:4))
+    func mutabableNewLine(newLineString : String?, color : UIColor? ) {
+        if let nl = newLineString, let el = encounterView.text, let col = color {
             encounterView.text = "\(el) \n \(nl)"
         }
     }

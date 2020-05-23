@@ -108,6 +108,8 @@ class ViewController: UIViewController, MKMapViewDelegate {
         var pinImage = UIImage(named: "")
         var size = CGSize(width: 50, height: 50)
        
+        print(annotation.subtitle)
+        
         switch annotation.subtitle {
         case "Monsters":
             pinImage = UIImage(named: "monsterClaw.png")
@@ -161,26 +163,29 @@ class ViewController: UIViewController, MKMapViewDelegate {
     }
     
     func fetchNearEntities(){
-        if let long = userLongitude, let lat = userLatitude {
-            guard let url = URL(string: "http://165.22.136.184:5000/coordinates/entitiesClose/\(long)/\(lat)") else {return}
-            
-            URLSession.shared.dataTask(with: url) { (data, response, err) in
-                if let error = err {
-                    print("error connecting to server. using mock data ", error)
-                    //self.getMockCoordinates()
-                } else {
-                    guard let data = data else { return }
-                    
-                    do {
-                        let vectors = try JSONDecoder().decode([Vector].self, from: data)
-                        
-                        self.completeVectorsFetch(array: vectors)
-                    } catch let JSONerror {
-                        print ("error parsing JSON entities", JSONerror)
-                    }
-                }
-            }.resume()
-        }
+        
+        self.getMockCoordinates()
+        
+//        if let long = userLongitude, let lat = userLatitude {
+//            guard let url = URL(string: "http://165.22.136.184:5000/coordinates/entitiesClose/\(long)/\(lat)") else {return}
+//
+//            URLSession.shared.dataTask(with: url) { (data, response, err) in
+//                if err != nil {
+//                    print("error connecting to server. using mock data ")
+//                    //self.getMockCoordinates()
+//                } else {
+//                    guard let data = data else { return }
+//
+//                    do {
+//                        let vectors = try JSONDecoder().decode([Vector].self, from: data)
+//
+//                        self.completeVectorsFetch(array: vectors)
+//                    } catch let JSONerror {
+//                        print ("error parsing JSON entities", JSONerror)
+//                    }
+//                }
+//            }.resume()
+//        }
     }
     
     func getMockCoordinates () {
